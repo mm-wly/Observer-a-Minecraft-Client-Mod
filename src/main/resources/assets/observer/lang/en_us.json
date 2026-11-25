@@ -64,5 +64,6 @@
   "observer.evidence.mineshaft_mesa": "Dark oak mineshaft in badlands.",
   "observer.evidence.mineshaft_rule": "Oak supports with rails/cobwebs.",
   "observer.evidence.treasure_rule": "Chest at chunk offset (9,9), vanilla base and surrounding materials.",
-  "observer.evidence.entity": "Entity received by the client."
+  "observer.evidence.entity": "Entity received by the client.",
+  "observer.evidence.abandoned_camp": "Tent fabric, support fences, storage and paths in a matching camp biome"
 }

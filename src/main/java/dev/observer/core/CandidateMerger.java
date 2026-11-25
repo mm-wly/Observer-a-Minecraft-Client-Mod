@@ -11,6 +11,7 @@ public final class CandidateMerger {
         String id=name.replace("minecraft:","");
         if(id.startsWith("mineshaft"))return new Policy(12,8,512);
         if(id.startsWith("village"))return new Policy(24,12,384);
+        if(id.startsWith("abandoned_camp"))return new Policy(8,6,128);
         if(id.startsWith("ocean_ruin"))return new Policy(8,6,96);
         return switch(id) {
             case "mansion","monument" -> new Policy(8,12,160);

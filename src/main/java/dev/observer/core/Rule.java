@@ -13,6 +13,7 @@ public record Rule(String id, String category, String dimension, String biomeFam
     public boolean environment(String dim,Set<String> biomes) {
         if(!dimension.equals(dim)&&!("minecraft:"+dimension).equals(dim))return false;
         if(biomeFamily.isEmpty())return true;
+        if(biomeFamily.startsWith("="))return biomes.stream().anyMatch(b->b.equals(biomeFamily.substring(1))||b.equals("minecraft:"+biomeFamily.substring(1)));
         return biomes.stream().anyMatch(b->switch(biomeFamily) {
             case "mesa" -> b.contains("badlands");
             case "not_mesa" -> !b.contains("badlands");

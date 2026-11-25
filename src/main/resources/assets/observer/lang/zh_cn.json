@@ -64,5 +64,6 @@
   "observer.evidence.mineshaft_mesa": "恶地深色橡木矿井",
   "observer.evidence.mineshaft_rule": "橡木支架与铁轨/蜘蛛网",
   "observer.evidence.treasure_rule": "区块偏移(9,9)、箱子、原版基底与包裹材料",
-  "observer.evidence.entity": "客户端已接收实体"
+  "observer.evidence.entity": "客户端已接收实体",
+  "observer.evidence.abandoned_camp": "对应群系中的帐篷布料、支撑栅栏、储物容器与小径"
 }

@@ -73,7 +73,7 @@ public final class ObserverClient implements ClientModInitializer {
         });
         LevelExtractionEvents.END_EXTRACTION.register(context->ObserverRenderer.extract(context,this));
         ClientLifecycleEvents.CLIENT_STOPPING.register(client->{invalidateWorker();worker.shutdownNow();});
-        LOG.info("Observer client initialized (Minecraft 26.2, loaded client data only)");
+        LOG.info("Observer client initialized (Minecraft 26.3, loaded client data only)");
     }
     public boolean isGlowing(Entity entity) { return entity.level()==world&&entity.isAlive()&&glowing.contains(entity.getUUID()); }
     public void changed(net.minecraft.core.BlockPos p,net.minecraft.world.level.block.state.BlockState oldState,net.minecraft.world.level.block.state.BlockState newState) { if(!sessions.isEmpty())index.changed(new SectionKey(p.getX()>>4,p.getY()>>4,p.getZ()>>4),oldState,newState); }

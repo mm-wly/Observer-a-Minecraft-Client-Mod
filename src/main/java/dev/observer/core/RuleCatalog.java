@@ -2,7 +2,7 @@ package dev.observer.core;
 
 import java.util.*;
 
-/** Vanilla 26.2 registry identifiers; no world seed or structure-start access. */
+/** Vanilla 26.3 registry identifiers; no world seed or structure-start access. */
 public final class RuleCatalog {
     private RuleCatalog() {}
     public static Set<String> blocks(String csv) { return Set.of(csv.split(",")); }
@@ -17,10 +17,14 @@ public final class RuleCatalog {
     private static final String STONEBRICK="stone_bricks,mossy_stone_bricks,cracked_stone_bricks,chiseled_stone_bricks";
     private static final String PORTAL="obsidian,crying_obsidian";
     private static final String TUFF="tuff_bricks,chiseled_tuff_bricks,polished_tuff,tuff_brick_stairs,tuff_brick_slab";
+    private static final String CAMP_FENCES="oak_fence,spruce_fence,birch_fence,jungle_fence,acacia_fence,dark_oak_fence,mangrove_fence,cherry_fence,pale_oak_fence,bamboo_fence,poplar_fence";
     private static final String SHIP_PARTS="oak_log,spruce_log,stripped_oak_log,stripped_spruce_log,oak_slab,spruce_slab,birch_slab,jungle_slab,acacia_slab,dark_oak_slab,oak_stairs,spruce_stairs,birch_stairs,jungle_stairs,acacia_stairs,dark_oak_stairs,oak_trapdoor,spruce_trapdoor,jungle_trapdoor,dark_oak_trapdoor,oak_fence,spruce_fence";
     public static final List<Rule> RULES=create();
     private static List<Rule> create() {
         var a=new ArrayList<Rule>();
+        // Audited against all 180 vanilla tent templates; five have no straw bed.
+        for(String biome:List.of("bamboo_jungle","birch_forest","cherry_grove","dappled_forest","flower_forest","forest","meadow","old_growth_birch_forest","old_growth_pine_taiga","old_growth_spruce_taiga","pale_garden","savanna","snowy_taiga","sparse_jungle","swamp","taiga","windswept_forest","wooded_badlands"))
+            a.add(r("abandoned_camp_"+biome,"overworld","="+biome,64,1,"white_wool_stairs,straw_bed,chest,barrel,"+CAMP_FENCES,"observer.evidence.abandoned_camp",g(12,"white_wool_stairs"),g(3,CAMP_FENCES),g(1,"chest,barrel"),g(4,"dirt_path")));
         a.add(r("buried_treasure","overworld","",1,0,"chest","observer.evidence.treasure_rule",g(1,"chest")));
         a.add(r("mineshaft","overworld","not_mesa",112,1,"oak_planks,oak_fence,rail,cobweb","observer.evidence.mineshaft_rule",g(5,"oak_planks,oak_fence"),g(2,"rail,cobweb")));
         a.add(r("mineshaft_mesa","overworld","mesa",112,1,"dark_oak_planks,dark_oak_fence,rail,cobweb","observer.evidence.mineshaft_mesa",g(5,"dark_oak_planks,dark_oak_fence"),g(2,"rail,cobweb")));
@@ -63,14 +67,14 @@ public final class RuleCatalog {
     public static String canonical(String id) { return id.equals("shipwreck_beached")?"shipwreck":id; }
     public static List<String> queryNames(String category) {
         var result=new TreeSet<>(names(category));
-        if(category.equals("structure")){result.addAll(List.of("village","ocean_ruin"));result.remove("shipwreck_beached");}
+        if(category.equals("structure")){result.addAll(List.of("village","ocean_ruin","abandoned_camp"));result.remove("shipwreck_beached");}
         return List.copyOf(result);
     }
     public static List<Rule> resolve(String category,String id) {
         if(!category.equals("structure"))return find(category,id).stream().toList();
         final String family=canonical(id);
         return RULES.stream().filter(r->r.category().equals(category)).filter(r->switch(family) {
-            case "village","ocean_ruin" -> r.id().startsWith(family+"_");
+            case "village","ocean_ruin","abandoned_camp" -> r.id().startsWith(family+"_");
             case "mineshaft","ruined_portal" -> r.id().equals(family)||r.id().startsWith(family+"_");
             case "shipwreck" -> r.id().equals("shipwreck");
             default -> r.id().equals(family);

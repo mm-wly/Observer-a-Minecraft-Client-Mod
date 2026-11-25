@@ -8,5 +8,5 @@
   "entrypoints": { "client": ["dev.observer.client.ObserverClient"] },
   "mixins": ["observer.mixins.json"],
   "license": "MIT",
-  "depends": { "fabricloader": ">=0.19.3", "minecraft": "26.2", "java": ">=25", "fabric-api": ">=0.154.0" }
+  "depends": { "fabricloader": ">=0.19.5", "minecraft": "26.3", "java": ">=25", "fabric-api": ">=0.161.0" }
 }
